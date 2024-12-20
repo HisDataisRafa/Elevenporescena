@@ -220,7 +220,18 @@ def main():
     
     if uploaded_file is not None:
         try:
-            df = pd.read_excel(uploaded_file)
+            # Leer el archivo Excel de manera segura
+            bytes_data = uploaded_file.getvalue()
+            excel_buffer = io.BytesIO(bytes_data)
+            
+            # Usar openpyxl explícitamente como el engine
+            df = pd.read_excel(excel_buffer, engine='openpyxl')
+            
+            # Verificar que hay datos
+            if df.empty:
+                st.error("El archivo Excel está vacío")
+                return
+                
             st.success("Archivo Excel cargado correctamente")
             
             # Mostrar preview de las escenas
