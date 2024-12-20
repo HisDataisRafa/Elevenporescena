@@ -17,11 +17,11 @@ if 'current_generation' not in st.session_state:
 
 def split_into_scenes(text):
     """
-    Divide el texto en escenas usando puntos como separadores
+    Divide el texto en escenas usando '//' como separador
     y limpia cada escena
     """
-    # Dividir por puntos y limpiar
-    scenes = [scene.strip() for scene in text.split('.') if scene.strip()]
+    # Dividir por '//' y limpiar espacios en blanco
+    scenes = [scene.strip() for scene in text.split('//') if scene.strip()]
     return scenes
 
 def generate_audio_with_retries(text, api_key, voice_id, stability, similarity, use_speaker_boost, 
@@ -125,7 +125,8 @@ def main():
     st.sidebar.markdown("""
     ### 🎬 Formato del texto
     - Ingresa el texto completo
-    - Se dividirá automáticamente en escenas
+    - Separa cada escena con //
+    - Ejemplo: "Escena 1 texto... // Escena 2 texto... // Escena 3 texto..."
     - Cada escena se generará 3 veces
     
     ### 🔄 Sistema de reintentos
